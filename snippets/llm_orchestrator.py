@@ -1,20 +1,23 @@
 """
-SNIPPET ILUSTRATIVO — Loop de orquestração de agente com function calling.
+ILLUSTRATIVE SNIPPET — Agent orchestration loop with function calling.
 
-NÃO é o código real da DIANA. Exemplo genérico do loop central:
+This is NOT DIANA's real code. Generic example of the core loop:
 
-    1. Monta prompt de sistema (regras + memória + contexto)
-    2. Envia catálogo de tools ao LLM
-    3. Se o LLM pedir tool_calls → executa → devolve resultado → repete
-    4. Se o LLM responder texto → extrai emoção → retorna ao frontend
+    1. Build the system prompt (rules + memory + context)
+    2. Send the tool catalogue to the LLM
+    3. If the LLM requests tool_calls -> execute -> return results -> repeat
+    4. If the LLM returns text -> extract emotion -> return to frontend
 
-O teto de iterações evita loop infinito de chamadas de ferramenta.
+The iteration cap prevents an infinite tool-calling loop.
 """
 
 from __future__ import annotations
 
 from typing import Any
-from tool_dispatch import ToolRegistry, ToolResult
+
+# In a real project this comes from the dispatch module shown in
+# snippets/tool_dispatch.py
+# from tool_dispatch import ToolRegistry, ToolResult
 
 
 MAX_ITERATIONS = 8
@@ -23,7 +26,7 @@ MAX_ITERATIONS = 8
 async def run_agent_turn(
     user_message: str,
     llm_client: Any,
-    registry: ToolRegistry,
+    registry: Any,
     system_prompt: str,
     max_iterations: int = MAX_ITERATIONS,
 ) -> dict[str, Any]:
@@ -48,7 +51,7 @@ async def run_agent_turn(
         messages.append({"role": "assistant", "tool_calls": tool_calls})
 
         for call in tool_calls:
-            result: ToolResult = await registry.dispatch(
+            result = await registry.dispatch(
                 call["name"], call.get("arguments", {})
             )
             messages.append({
@@ -58,13 +61,13 @@ async def run_agent_turn(
             })
 
     return {
-        "reply_text": "Não consegui concluir em tempo hábil, amor.",
+        "reply_text": "I couldn't finish that in time.",
         "emotion": "thinking",
     }
 
 
 def _extract_emotion(text: str) -> str:
-    """Extrai a tag [EMO:xxx] do texto (controla o avatar 3D)."""
+    """Extracts the [EMO:xxx] tag from the text (drives the 3D avatar)."""
     for emo in ("happy", "excited", "surprised", "thinking", "sad", "angry"):
         if f"[EMO:{emo}]" in text:
             return emo
