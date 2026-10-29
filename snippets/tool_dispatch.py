@@ -1,12 +1,12 @@
 """
-SNIPPET ILUSTRATIVO — Padrão de despacho de ferramentas com verificação de resultado.
+ILLUSTRATIVE SNIPPET — Tool dispatch pattern with result verification.
 
-Este arquivo NÃO faz parte do código funcional da DIANA. É um exemplo genérico
-do padrão de engenharia usado: o modelo emite tool calls, o dispatcher executa,
-e o resultado estruturado é devolvido ao modelo. O agente só pode afirmar
-sucesso quando `ok == True`.
+This file is NOT part of DIANA's functional codebase. It is a generic example
+of the engineering pattern used: the model emits tool calls, the dispatcher
+executes them, and a structured result is returned to the model. The agent may
+only claim success when `ok == True`.
 
-Este é o coração do padrão "honest tool results".
+This is the core of the "honest tool results" pattern.
 """
 
 from __future__ import annotations
@@ -17,14 +17,15 @@ from typing import Any, Callable, Awaitable
 
 @dataclass
 class ToolResult:
-    """Resultado estruturado de qualquer ferramenta."""
+    """Structured result of any tool."""
+
     ok: bool
     result: Any = None
     error: str | None = None
     explained: dict[str, Any] = field(default_factory=dict)
 
     def to_model_payload(self) -> dict[str, Any]:
-        """Payload que volta para o LLM — nunca esconde falhas."""
+        """Payload sent back to the LLM — never hides failures."""
         return {
             "ok": self.ok,
             "result": self.result if self.ok else None,
@@ -33,7 +34,7 @@ class ToolResult:
 
 
 class ToolRegistry:
-    """Catálogo de ferramentas disponíveis para o LLM."""
+    """Catalogue of tools available to the LLM."""
 
     def __init__(self) -> None:
         self._tools: dict[str, Callable[..., Awaitable[ToolResult]]] = {}
@@ -42,19 +43,19 @@ class ToolRegistry:
         self._tools[name] = fn
 
     def schemas(self) -> list[dict[str, Any]]:
-        """Schemas JSON enviados ao LLM no formato function calling."""
+        """JSON schemas sent to the LLM in function-calling format."""
         return [
             {"type": "function", "function": {"name": name}}
             for name in self._tools
         ]
 
     async def dispatch(self, name: str, args: dict[str, Any]) -> ToolResult:
-        """Executa uma tool e SEMPRE retorna ToolResult — nunca lança para o LLM."""
+        """Executes a tool and ALWAYS returns a ToolResult — never raises to the LLM."""
         fn = self._tools.get(name)
         if fn is None:
             return ToolResult(
                 ok=False,
-                error=f"Tool '{name}' não encontrada no registro.",
+                error=f"Tool '{name}' not found in registry.",
                 explained={"can_autofix": False, "severity": "medium"},
             )
         try:
@@ -65,12 +66,12 @@ class ToolRegistry:
         except TypeError as exc:
             return ToolResult(
                 ok=False,
-                error=f"Argumentos inválidos para '{name}': {exc}",
+                error=f"Invalid arguments for '{name}': {exc}",
                 explained={"can_autofix": True, "severity": "low"},
             )
         except Exception as exc:  # noqa: BLE001
             return ToolResult(
                 ok=False,
-                error=f"Falha em '{name}': {exc}",
+                error=f"Failure in '{name}': {exc}",
                 explained={"can_autofix": True, "severity": "medium"},
             )
