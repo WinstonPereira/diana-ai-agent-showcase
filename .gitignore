@@ -1,0 +1,12 @@
+# Este repositório é uma vitrine — não contém o código proprietário.
+# Ainda assim, proteção básica:
+
+__pycache__/
+*.py[cod]
+.venv/
+node_modules/
+.env
+*.log
+*.bak
+.DS_Store
+Thumbs.db
