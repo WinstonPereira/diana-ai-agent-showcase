@@ -1,5 +1,5 @@
-# Este repositório é uma vitrine — não contém o código proprietário.
-# Ainda assim, proteção básica:
+# This repository is a showcase — it does not contain the proprietary code.
+# Basic protection nonetheless:
 
 __pycache__/
 *.py[cod]
