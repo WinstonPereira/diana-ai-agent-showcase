@@ -1,80 +1,80 @@
-# Diagramas de Arquitetura — DIANA
+# Architecture Diagrams — DIANA
 
-## 1. Fluxo Frontend ↔ Backend
+## 1. Frontend ↔ Backend Flow
 
 ```mermaid
 sequenceDiagram
-    participant U as Usuário
+    participant U as User
     participant E as Electron (Frontend)
     participant F as FastAPI (Backend)
     participant L as LLM Provider
-    participant S as Sistema (Windows)
+    participant S as System (Windows)
 
-    U->>E: fala ou digita
-    E->>E: STT (áudio → texto)
-    E->>F: POST /chat {mensagem, contexto}
-    F->>F: carrega regras + memória
-    F->>L: prompt + catálogo de tools
-    L-->>F: resposta + tool_calls
-    loop para cada tool_call
-        F->>S: executa ferramenta
-        S-->>F: resultado {ok, result|error}
-        F->>L: resultado da tool
+    U->>E: speaks or types
+    E->>E: STT (audio → text)
+    E->>F: POST /chat {message, context}
+    F->>F: loads rules + memory
+    F->>L: prompt + tool catalogue
+    L-->>F: response + tool_calls
+    loop for each tool_call
+        F->>S: executes tool
+        S-->>F: result {ok, result|error}
+        F->>L: tool result
     end
-    L-->>F: resposta final + emotion
+    L-->>F: final response + emotion
     F-->>E: {reply_text, emotion}
-    E->>E: TTS (texto → fala) + animação do avatar
-    E-->>U: fala + gesto 3D
+    E->>E: TTS (text → speech) + avatar animation
+    E-->>U: speech + 3D gesture
 ```
 
-## 2. Pipeline de Auto-Modificação Segura
+## 2. Safe Self-Modification Pipeline
 
 ```mermaid
 flowchart TD
-    A[IA decide editar código] --> B{Arquivo novo ou existente?}
-    B -->|novo| C[write]
-    B -->|existente| D[edit cirúrgico<br/>old_string → new_string]
-    C --> E[Validação de sintaxe AST]
+    A[AI decides to edit code] --> B{New or existing file?}
+    B -->|new| C[write]
+    B -->|existing| D[surgical edit<br/>old_string → new_string]
+    C --> E[AST syntax validation]
     D --> E
-    E -->|falha| R[REJEITA — não grava]
-    E -->|ok| F[Checagem pyflakes<br/>nomes indefinidos]
-    F -->|falha| R
-    F -->|ok| G[Backup automático]
-    G --> H[Grava arquivo]
-    H --> I[Teste real: importa módulo]
-    I -->|falha| J[ROLLBACK automático]
-    I -->|ok| K[Sucesso confirmado]
-    R --> L[Reporta erro exato]
+    E -->|fail| R[REJECT — no write]
+    E -->|ok| F[pyflakes check<br/>undefined names]
+    F -->|fail| R
+    F -->|ok| G[Automatic backup]
+    G --> H[Write file]
+    H --> I[Real test: import module]
+    I -->|fail| J[Automatic ROLLBACK]
+    I -->|ok| K[Success confirmed]
+    R --> L[Reports exact error]
     J --> L
 ```
 
-## 3. Camada de Segurança de Arquivos
+## 3. File Safety Layer
 
 ```mermaid
 flowchart LR
-    A[Ação solicitada] --> B{É destrutiva?}
-    B -->|não| C[Executa direto]
-    B -->|sim| D{Tem confirmação?}
-    D -->|não| E[Solicita confirmação]
-    D -->|sim| F{Passa whitelist?}
-    F -->|não| G[BLOQUEIA + explica]
-    F -->|sim| H[Executa com backup]
-    H --> I[Verifica resultado real]
-    I -->|ok=false| J[Reporta erro exato]
-    I -->|ok=true| K[Confirma sucesso]
+    A[Requested action] --> B{Is it destructive?}
+    B -->|no| C[Execute directly]
+    B -->|yes| D{Has confirmation?}
+    D -->|no| E[Request confirmation]
+    D -->|yes| F{Passes whitelist?}
+    F -->|no| G[BLOCKS + explains]
+    F -->|yes| H[Execute with backup]
+    H --> I[Verify real result]
+    I -->|ok=false| J[Reports exact error]
+    I -->|ok=true| K[Confirms success]
 ```
 
-## 4. Ciclo de Vida de uma Skill
+## 4. Skill Lifecycle
 
 ```mermaid
 stateDiagram-v2
-    [*] --> Descoberta: scan do diretório
-    Descoberta --> Registrada: valida schema
-    Registrada --> Executável: disponível ao LLM
-    Executável --> Criada_em_runtime: IA gera nova skill
-    Criada_em_runtime --> Registrada
-    Executável --> Medindo: usuário solicita
-    Medindo --> Executável: resultado real
-    Executável --> Falha: erro de execução
-    Falha --> Executável: autofix
+    [*] --> Discovered: directory scan
+    Discovered --> Registered: schema validated
+    Registered --> Executable: available to LLM
+    Executable --> CreatedAtRuntime: AI generates new skill
+    CreatedAtRuntime --> Registered
+    Executable --> Measuring: user requests
+    Measuring --> Executable: real result
+    Executable --> Failed: execution error
+    Failed --> Executable: autofix
 ```
