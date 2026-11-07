@@ -6,13 +6,15 @@
 
 ## What is DIANA
 
-DIANA is a **personal AI assistant with a 3D body, real operating-system control, and self-modifying code**. She is not a chatbot: she executes actions on the user's PC (open/close applications, edit files, run scripts, control IoT devices, measure hardware), speaks to the user through voice (STT + TTS), and has an animated 3D avatar that expresses emotions and full-body gestures.
+DIANA is a **personal AI assistant that lives on your desktop, controls the operating system for real, and rewrites its own source code safely**. She is not a chatbot: she executes actions on the user's PC (open/close applications, edit files, run scripts, control IoT devices, measure hardware), speaks to the user through voice (STT + TTS), and is rendered on screen as a **reactive energy orb** that changes state, color and motion according to her emotional state and activity.
 
-The engineering differentiator rests on three pillars:
+The engineering differentiator rests on five pillars:
 
 1. **LLM orchestration with real function calling** — the model does not "describe what it would do"; it emits structured tool calls that are executed on the system, with verified results returned to the model.
 2. **Safe self-modification of code** — the AI can rewrite its own source code, but every edit passes through a validation pipeline that automatically reverts anything that breaks syntax, introduces undefined names, or fails a real runtime test.
 3. **Agent honesty (grounding)** — the agent never fabricates measurements or tool results. If a skill does not exist, it admits so and proposes installing it; if a tool fails, it reports the exact error.
+4. **Initiative and autonomy** — a multi-brain bus (sensors → limbic state → planner → executor) lets her notice context on the machine, propose actions and run long multi-step plans without being asked again.
+5. **Local-first security layer** — a five-layer protection system watches the machine (processes, files, startup entries, filters, optional LLM analyst) with a false-positive filter and a risk engine.
 
 ---
 
@@ -27,9 +29,8 @@ The engineering differentiator rests on three pillars:
           │     ELECTRON (Desktop Frontend)   │
           │  ─────────────────────────────    │
           │  • Chat window                    │
-          │  • 3D avatar (Three.js / GLB)     │
-          │  • TTS playback                   │
-          │  • Audio capture (STT)            │
+          │  • Reactive energy orb (state/emotion driven)
+          │  • TTS playback + audio capture   │
           └─────────────────┬─────────────────┘
                             │  HTTP / WebSocket
           ┌─────────────────▼─────────────────┐
@@ -37,10 +38,11 @@ The engineering differentiator rests on three pillars:
           │  ─────────────────────────────    │
           │  • REST API + WS broadcast        │
           │  • LLM orchestrator               │
-          │  • Skill registry                 │
-          │  • Tool dispatcher                │
+          │  • Tool dispatcher (41+ tools)    │
+          │  • Skill registry (runtime)       │
           │  • Self-modification pipeline     │
-          │  • Safety rules layer             │
+          │  • Autonomy bus + planner         │
+          │  • Protection / security layers   │
           └──────┬──────────────┬─────────────┘
                  │              │
      ┌───────────▼───┐   ┌──────▼────────────┐
@@ -81,13 +83,13 @@ Illustrative snippet: [`snippets/safe_edit_pipeline.py`](snippets/safe_edit_pipe
 
 System rules prevent the agent from inventing measurable data. If the user asks "what is my CPU temperature?" and no measurement skill is installed, the mandatory answer is to admit it and offer to install one — never to estimate a number.
 
-### 4. 3D Avatar with Emotional State
+### 4. Reactive Orb with Emotional State
 
-The backend emits an `emotion` field in the response (happy, excited, surprised, thinking, sad, angry, neutral). The frontend maps that field to full-body animations (dance, greet, spin, peace sign, etc.) on a GLB model loaded via Three.js. TTS is synchronized with the avatar's mouth (lip-sync via phonemes/visemes).
+The backend emits an `emotion` field in the response (happy, excited, surprised, thinking, sad, angry, neutral) plus an activity state. The desktop frontend renders a **procedural energy orb** (WebGL shader) that reacts to that state: color, pulse frequency, glow and turbulence change with the emotion, and it shifts to an "active" mode while tools are executing. Voice output is synchronized with the orb's pulse, so the assistant feels physically present without needing a rigged 3D character.
 
 ### 5. Bidirectional Voice
 
-- **STT**: audio capture → transcription (with provider fallback)
+- **STT**: audio capture → preprocessing (AGC/noise) → transcription with provider fallback → phonetic correction layer
 - **TTS**: text → speech, with markdown stripping before synthesis (asterisks were being spoken aloud as "asterisk")
 - Multi-language support (responds in English when the user speaks English)
 
@@ -95,9 +97,17 @@ The backend emits an `emotion` field in the response (happy, excited, surprised,
 
 Skills are Python modules discoverable at runtime. The agent can **create new skills** on request, register them, and execute them immediately. This allows the system to evolve without a deploy.
 
-### 7. Local IoT Integration
+### 7. Autonomy Bus and Planner
+
+A lightweight limbic-inspired layer combines PC sensors (active window, CPU, RAM, disk, battery, time of day) into a state, and a planner decomposes large goals into verified steps. The agent can work through a multi-step plan, checking each step's real result, and reporting honestly what was done, what failed and what is pending.
+
+### 8. Local IoT Integration
 
 Discovery and control of Tuya/Smart Life devices **without the cloud** (local UDP/TCP protocol), with multi-device scenes (e.g. "cinema mode" = dim lights + turn on TV).
+
+### 9. Security and Protection Layers
+
+A five-layer local protection system: process monitor, file scanner, startup auditing, false-positive filter and an optional LLM analyst. It runs inside the backend lifespan, logs alerts, and exposes explicit control actions (status, scan, alerts, start/stop).
 
 ---
 
@@ -107,11 +117,12 @@ Discovery and control of Tuya/Smart Life devices **without the cloud** (local UD
 |---|---|
 | AI rewriting its own code and breaking the backend | Triple-validation pipeline with automatic rollback |
 | Hallucination of hardware metrics | Grounding rules + mandatory real skill for measurement |
-| TTS ↔ lip animation synchronization | Phoneme→viseme mapping with animation queue |
-| Full-body gestures in real time | Animation state machine with blend and priority |
+| Voice output that "feels" like a present character | Reactive orb driven by emotion + activity + audio pulse |
+| Real-time emotional feedback | Emotion field → orb state machine (color, pulse, turbulence) |
 | Self-diagnosis of tool failures | Structured error objects with `cause`/`action`/`can_autofix` |
 | Long conversation context | Summarization system focused on current task vs. history |
 | Safety of destructive actions | Mandatory confirmation + file quarantine + app whitelist |
+| Running long multi-step work without losing the thread | Task queue with per-step verification and progress file |
 
 ---
 
@@ -127,12 +138,13 @@ ai-assistant-3d/
 │   │   ├── skills/           # Dynamic skill registry
 │   │   │   ├── builtin/      # Native skills
 │   │   │   └── generated/    # Skills created at runtime
-│   │   ├── rules/            # Safety rules engine
-│   │   ├── memory/           # Persistent memory + diary
-│   │   └── services/         # TTS, STT, vision, IoT
+│   │   ├── services/         # STT, TTS, vision, IoT, autonomy
+│   │   ├── protection/       # 5-layer security system
+│   │   ├── rules/            # Safety and behaviour rules engine
+│   │   └── memory/           # Persistent memory + diary
 │   └── data/                 # Persistence (runtime, not versioned)
-├── frontend/                 # Chat UI
-├── electron/                 # Desktop shell + 3D avatar
+├── frontend/                 # Chat UI + orb renderer
+├── electron/                 # Desktop shell
 └── rules/                    # Behaviour rules (Markdown)
 ```
 
@@ -142,7 +154,7 @@ ai-assistant-3d/
 
 - The agent has **no** native screen vision — it relies on measurement tools to judge visual results.
 - Tool-calling quality depends on the configured LLM provider.
-- The 3D avatar requires a GPU with WebGL support.
+- The orb renderer requires WebGL support.
 - IoT control is local (same network); there is no cloud bridge.
 - Self-modification is scoped to project files and always validated — this is not "an AGI rewriting itself".
 
@@ -151,7 +163,7 @@ ai-assistant-3d/
 ## Stack
 
 **Backend:** Python, FastAPI, WebSockets, asyncio, pyflakes, AST
-**Frontend:** Electron, JavaScript/TypeScript, Three.js, Web Audio API
+**Frontend:** Electron, JavaScript/TypeScript, WebGL (orb), Web Audio API
 **AI:** LLM via API (DeepSeek/Groq), function calling, STT/TTS
 **Infra:** Windows, git, robocopy (backup), PowerShell (automation)
 
