@@ -16,7 +16,7 @@ DIANA ships with a **five-layer local security system** that runs inside the bac
 
 - **Local first.** Every layer works fully offline. The LLM analyst is an optional enhancement, never a dependency.
 - **False positives are the real enemy.** A security assistant that cries wolf gets ignored. The filter layer is therefore treated as a first-class component, not an afterthought.
-- **Explicit control surface.** The agent exposes `status`, `scan`, `alertas`, `iniciar` and `parar` — the user always knows whether protection is running and what it found.
+- **Explicit control surface.** The agent exposes `status`, `scan`, `alerts`, `start` and `stop` — the user always knows whether protection is running and what it found.
 - **Nothing is auto-deleted.** Suspicious files are quarantined (moved), never destroyed, so mistakes are reversible.
 
 ## Alert flow
