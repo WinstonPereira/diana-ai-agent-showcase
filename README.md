@@ -17,12 +17,14 @@
      ==================================================== -->
 
 <p align="center">
-  <img src="docs/media/diana-demo.gif" alt="DIANA — reactive orb, voice and real PC control" width="820">
+  <img src="https://img.shields.io/badge/▶%20demo-coming%20soon-orange?style=for-the-badge" alt="Demo coming soon">
 </p>
 
 <p align="center">
-  <a href="docs/media/diana-demo.mp4"><b>▶ Watch the full demo (MP4)</b></a>
-  &nbsp;·&nbsp;
+  <i>Screen recording in progress — the slot below is wired and ready.</i>
+</p>
+
+<p align="center">
   <a href="docs/engineering.md">Engineering Notes</a>
   &nbsp;·&nbsp;
   <a href="docs/diagrams/architecture.md">Architecture</a>
@@ -36,7 +38,7 @@
   <a href="docs/roadmap.md">Roadmap</a>
 </p>
 
-> 🎬 **Media slot ready:** drop `diana-demo.gif` (and optionally `diana-demo.mp4` / `demo-thumb.png`) into `docs/media/` — the links above start working immediately. Until then, see [docs/media/README.md](docs/media/README.md) for the recording guide (what to show, in what order, ideal length).
+> 🎬 **Media slot ready (assets pending):** drop `diana-demo.gif` (and optionally `diana-demo.mp4` / `demo-thumb.png`) into `docs/media/` — the links above start working immediately. Until then, see [docs/media/README.md](docs/media/README.md) for the recording guide (what to show, in what order, ideal length).
 
 > **Note:** This repository is a **technical showcase (black-box)**. It documents the architecture, engineering concepts, and challenges overcome while building DIANA. **The core functional code is not here** — it is proprietary. What you will find are diagrams, architecture specifications, and generic snippets that illustrate engineering patterns without exposing business logic.
 
