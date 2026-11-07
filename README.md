@@ -4,7 +4,7 @@
      Substitua os links abaixo quando subir o video/GIF.
      Opcao A (GIF no repo):  ![DIANA demo](docs/media/diana-demo.gif)
      Opcao B (video no YouTube): [![Watch the demo](docs/media/demo-thumb.png)](https://youtu.be/SEU_ID)
-     Opcao C (arquivo no repo): [Download demo (MP4)](docs/media/diana-demo.mp4)
+     Option C (file in repo): [Download demo (MP4)](docs/media/diana-demo.mp4)
      ==================================================== -->
 
 <p align="center">
