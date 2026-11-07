@@ -23,8 +23,8 @@ sequenceDiagram
     end
     L-->>F: final response + emotion
     F-->>E: {reply_text, emotion}
-    E->>E: TTS (text → speech) + avatar animation
-    E-->>U: speech + 3D gesture
+    E->>E: TTS (text → speech) + orb reaction
+    E-->>U: speech + orb state change
 ```
 
 ## 2. Safe Self-Modification Pipeline
@@ -77,4 +77,36 @@ stateDiagram-v2
     Measuring --> Executable: real result
     Executable --> Failed: execution error
     Failed --> Executable: autofix
+```
+
+
+## 4. Autonomy Loop
+
+```mermaid
+flowchart TD
+    A[Sensor cycle] --> B[Limbic state: focus / energy / mode]
+    B --> C{Mode}
+    C -->|WORK| D[Read-only sensors<br/>no spontaneous action]
+    C -->|IDLE| E[Read-only wandering:<br/>research, memory, learning]
+    D --> F[User request]
+    F --> G[Planner: numbered steps]
+    G --> H[Execute step + verify result]
+    H --> I{ok?}
+    I -->|yes| J[Next step]
+    I -->|no| K[Retry up to 3x, then report exact error]
+    J --> G
+```
+
+## 5. Protection Cycle
+
+```mermaid
+flowchart LR
+    A[30s daemon cycle] --> B[Process monitor]
+    A --> C[File scanner]
+    A --> D[Startup audit]
+    B --> E[False-positive filter]
+    C --> E
+    D --> E
+    E --> F[Risk engine]
+    F --> G[Alert log + optional LLM explanation]
 ```
