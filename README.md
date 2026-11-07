@@ -1,10 +1,19 @@
 # DIANA — Autonomous AI Agent (Black-Box Case Study)
 
+<p align="center">
+  <img alt="status" src="https://img.shields.io/badge/status-active-brightgreen">
+  <img alt="python" src="https://img.shields.io/badge/backend-Python%20%2B%20FastAPI-3776AB?logo=python&logoColor=white">
+  <img alt="frontend" src="https://img.shields.io/badge/frontend-Electron%20%2B%20WebGL-47848F?logo=electron&logoColor=white">
+  <img alt="llm" src="https://img.shields.io/badge/AI-function%20calling-8A2BE2">
+  <img alt="license" src="https://img.shields.io/badge/docs%20license-MIT-blue">
+  <img alt="code" src="https://img.shields.io/badge/core%20code-proprietary-lightgrey">
+</p>
+
 <!-- ================= DEMO MEDIA SLOT =================
-     Substitua os links abaixo quando subir o video/GIF.
-     Opcao A (GIF no repo):  ![DIANA demo](docs/media/diana-demo.gif)
-     Opcao B (video no YouTube): [![Watch the demo](docs/media/demo-thumb.png)](https://youtu.be/SEU_ID)
-     Option C (file in repo): [Download demo (MP4)](docs/media/diana-demo.mp4)
+     Drop the assets into docs/media/ and the links below start working.
+     Option A (GIF in repo):    ![DIANA demo](docs/media/diana-demo.gif)
+     Option B (YouTube video):  [![Watch the demo](docs/media/demo-thumb.png)](https://youtu.be/YOUR_ID)
+     Option C (MP4 in repo):    [Download demo (MP4)](docs/media/diana-demo.mp4)
      ==================================================== -->
 
 <p align="center">
@@ -190,14 +199,6 @@ ai-assistant-3d/
 
 ---
 
-## Contact
-
-This is a portfolio case study. For technical discussion about autonomous agent architecture, feel free to open an issue.
-
-**Author:** Winston Pereira
-**Project:** DIANA — Defense Intelligence Assistant
-
----
 
 ## Demo — what the recording should show
 
