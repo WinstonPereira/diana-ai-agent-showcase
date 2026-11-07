@@ -80,7 +80,7 @@ stateDiagram-v2
 ```
 
 
-## 4. Autonomy Loop
+## 5. Autonomy Loop
 
 ```mermaid
 flowchart TD
@@ -97,7 +97,7 @@ flowchart TD
     J --> G
 ```
 
-## 5. Protection Cycle
+## 6. Protection Cycle
 
 ```mermaid
 flowchart LR
