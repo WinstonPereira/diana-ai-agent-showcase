@@ -67,7 +67,7 @@ async def run_agent_turn(
 
 
 def _extract_emotion(text: str) -> str:
-    """Extracts the [EMO:xxx] tag from the text (drives the 3D avatar)."""
+    """Extracts the [EMO:xxx] tag from the text (drives the reactive orb)."""
     for emo in ("happy", "excited", "surprised", "thinking", "sad", "angry"):
         if f"[EMO:{emo}]" in text:
             return emo
