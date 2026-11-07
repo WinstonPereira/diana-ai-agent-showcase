@@ -212,3 +212,16 @@ A 60–90 second screen capture is enough to prove every claim in this document.
 | 5 | Protection scan → alert raised → false-positive filter | Five-layer local security |
 
 See [docs/media/README.md](docs/media/README.md) for the full recording checklist.
+
+---
+
+## Author
+
+**Winston Pereira** — AI Product Architect
+
+Building Diana as a working proof that a single developer can ship an agent with real tool use, real verification, and real local security.
+
+- LinkedIn: [winston-pereira-0748243bb](https://www.linkedin.com/in/winston-pereira-0748243bb/)
+- GitHub: [@WinstonPereira](https://github.com/WinstonPereira)
+
+Open to conversations about AI agent architecture, tool-use safety, and applied LLM engineering.
