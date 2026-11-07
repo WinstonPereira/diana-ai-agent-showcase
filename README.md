@@ -23,9 +23,17 @@
 <p align="center">
   <a href="docs/media/diana-demo.mp4"><b>▶ Watch the full demo (MP4)</b></a>
   &nbsp;·&nbsp;
-  <a href="docs/roadmap.md">Roadmap</a>
+  <a href="docs/engineering.md">Engineering Notes</a>
   &nbsp;·&nbsp;
   <a href="docs/diagrams/architecture.md">Architecture</a>
+  &nbsp;·&nbsp;
+  <a href="docs/protection.md">Security</a>
+  &nbsp;·&nbsp;
+  <a href="docs/voice.md">Voice</a>
+  &nbsp;·&nbsp;
+  <a href="docs/autonomy.md">Autonomy</a>
+  &nbsp;·&nbsp;
+  <a href="docs/roadmap.md">Roadmap</a>
 </p>
 
 > 🎬 **Media slot ready:** drop `diana-demo.gif` (and optionally `diana-demo.mp4` / `demo-thumb.png`) into `docs/media/` — the links above start working immediately. Until then, see [docs/media/README.md](docs/media/README.md) for the recording guide (what to show, in what order, ideal length).
@@ -87,6 +95,17 @@ The engineering differentiator rests on five pillars:
 ```
 
 Detailed diagram in [`docs/diagrams/architecture.md`](docs/diagrams/architecture.md).
+
+### Documentation
+
+| Document | What it covers |
+|---|---|
+| [Engineering Notes](docs/engineering.md) | Failure taxonomy, self-modification guard chain, grounding strategy, design trade-offs |
+| [Architecture Diagrams](docs/diagrams/architecture.md) | Request flow, edit pipeline, file safety, skill lifecycle, autonomy loop, protection cycle |
+| [Autonomy](docs/autonomy.md) | Sensors, limbic state, work vs. idle mode, planner and task queue |
+| [Protection Layers](docs/protection.md) | Five-layer local security system and alert flow |
+| [Voice Pipeline](docs/voice.md) | Audio preprocessing, STT fallback, correction layer, TTS |
+| [Roadmap](docs/roadmap.md) | Done, next, and explicit non-goals |
 
 ---
 
