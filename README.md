@@ -1,5 +1,26 @@
 # DIANA — Autonomous AI Agent (Black-Box Case Study)
 
+<!-- ================= DEMO MEDIA SLOT =================
+     Substitua os links abaixo quando subir o video/GIF.
+     Opcao A (GIF no repo):  ![DIANA demo](docs/media/diana-demo.gif)
+     Opcao B (video no YouTube): [![Watch the demo](docs/media/demo-thumb.png)](https://youtu.be/SEU_ID)
+     Opcao C (arquivo no repo): [Download demo (MP4)](docs/media/diana-demo.mp4)
+     ==================================================== -->
+
+<p align="center">
+  <img src="docs/media/diana-demo.gif" alt="DIANA — reactive orb, voice and real PC control" width="820">
+</p>
+
+<p align="center">
+  <a href="docs/media/diana-demo.mp4"><b>▶ Watch the full demo (MP4)</b></a>
+  &nbsp;·&nbsp;
+  <a href="docs/roadmap.md">Roadmap</a>
+  &nbsp;·&nbsp;
+  <a href="docs/diagrams/architecture.md">Architecture</a>
+</p>
+
+> 🎬 **Media slot ready:** drop `diana-demo.gif` (and optionally `diana-demo.mp4` / `demo-thumb.png`) into `docs/media/` — the links above start working immediately. Until then, see [docs/media/README.md](docs/media/README.md) for the recording guide (what to show, in what order, ideal length).
+
 > **Note:** This repository is a **technical showcase (black-box)**. It documents the architecture, engineering concepts, and challenges overcome while building DIANA. **The core functional code is not here** — it is proprietary. What you will find are diagrams, architecture specifications, and generic snippets that illustrate engineering patterns without exposing business logic.
 
 ---
@@ -175,3 +196,19 @@ This is a portfolio case study. For technical discussion about autonomous agent 
 
 **Author:** Winston Pereira
 **Project:** DIANA — Defense Intelligence Assistant
+
+---
+
+## Demo — what the recording should show
+
+A 60–90 second screen capture is enough to prove every claim in this document. Recommended order:
+
+| # | Shot | What it proves |
+|---|------|----------------|
+| 1 | Voice question → orb reacts → spoken answer | STT + TTS + orb state driver |
+| 2 | "Open Chrome and search for X" → real action | Function calling executed on the OS |
+| 3 | Missing skill → agent admits + proposes install | Grounding / no hallucination |
+| 4 | Self-edit request → validation pipeline → auto-revert of a broken edit | Safe self-modification |
+| 5 | Protection scan → alert raised → false-positive filter | Five-layer local security |
+
+See [docs/media/README.md](docs/media/README.md) for the full recording checklist.
